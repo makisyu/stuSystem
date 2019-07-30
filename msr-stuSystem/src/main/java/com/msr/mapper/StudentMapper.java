@@ -9,9 +9,6 @@ import com.msr.entity.Student;
 import com.msr.entity.StudentExample;
 
 public interface StudentMapper {
-	//通过学生姓名，查询学生对象
-	/*public Student findStudentByName(String stuName);*/
-	
 	//批量删除
 	public int delete(String ids);
 	
