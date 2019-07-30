@@ -1,0 +1,76 @@
+package com.msr.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.msr.entity.Attendance;
+import com.msr.entity.AttendanceExample;
+import com.msr.entity.AttendanceExample.Criteria;
+import com.msr.mapper.AttendanceMapper;
+import com.msr.page.Page;
+import com.msr.service.AttendanceService;
+import com.msr.util.StringUtil;
+
+@Service
+public class AttendanceServiceImpl implements AttendanceService {
+	@Autowired
+	private AttendanceMapper attendanceMapper;
+	
+	/**
+	 * 设置条件查询参数
+	 * @param page
+	 * @param clazz
+	 * @return
+	 */
+	public AttendanceExample queryClazzExample(Page page,Attendance attendance) {
+		//设置 条件查询
+		AttendanceExample attendanceExample = new AttendanceExample();
+		
+		Criteria criteria = attendanceExample.createCriteria();
+		
+		//如果对象不为空，则进行条件查询
+		if(attendance!=null) {
+			
+		}
+		
+		//设置排序字段
+		//attendanceExample.setOrderByClause("clazz_startTime DESC");//注意：排序使用的是sql中的列名
+		//设置分页参数    
+		attendanceExample.setStartRow(page.getOffset()); 
+		attendanceExample.setPageSize(page.getRows());
+		
+		return attendanceExample;
+	}
+	
+	/**
+	 * 获取考勤列表
+	 */
+	@Override
+	public List<Attendance> attendanceList(Page page, Attendance attendance) {
+		AttendanceExample attendanceExample = queryClazzExample(page, attendance);
+		return attendanceMapper.selectByExample(attendanceExample);
+	}
+
+
+	/**
+	 * 获取总记录数
+	 * @param queryMap
+	 * @return
+	 */
+	@Override
+	public int getTotal(Page page,Attendance attendance) {
+		AttendanceExample attendanceExample = queryClazzExample(page, attendance);
+		return attendanceMapper.countByExample(attendanceExample);
+	}
+
+	/**
+	 * 批量删除
+	 */
+	@Override
+	public int delete(String ids) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+}

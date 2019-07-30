@@ -1,0 +1,118 @@
+package com.msr.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.msr.entity.Company;
+import com.msr.entity.CompanyExample;
+import com.msr.entity.CompanyExample.Criteria;
+import com.msr.mapper.CompanyMapper;
+import com.msr.page.Page;
+import com.msr.service.CompanyService;
+import com.msr.util.PojoUtils;
+import com.msr.util.StringUtil;
+
+@Service
+public class CompanyServiceImpl implements CompanyService {
+	@Autowired
+	private CompanyMapper companyMapper; 
+	
+	/**
+	 * 设置条件查询参数
+	 * @param page
+	 * @param company
+	 * @return
+	 */
+	public CompanyExample queryCompanyExample(Page page,Company company) {
+		//设置 条件查询
+		CompanyExample companyExample = new CompanyExample();
+		Criteria criteria = companyExample.createCriteria();
+		
+		//如果对象不为空，则进行条件查询
+		if(company!=null) {
+			if(!StringUtil.isEmpty(company.getCompanyAddress()))	
+				criteria.andCompanyAddressEqualTo(company.getCompanyAddress());
+			if(!StringUtil.isEmpty(company.getCompanyName())) 		
+				criteria.andCompanyNameEqualTo(company.getCompanyName());
+			if(!StringUtil.isEmpty(company.getCompanyContact())) 	
+				criteria.andCompanyContactEqualTo(company.getCompanyContact());
+			if(!StringUtil.isEmpty(company.getCompanyTel())) 	
+				criteria.andCompanyTelEqualTo(company.getCompanyTel());
+		}
+		
+		//设置排序字段
+		companyExample.setOrderByClause("company_id DESC");//注意：排序使用的是sql中的列名
+		//设置分页参数
+		companyExample.setStartRow(page.getOffset()); 
+		companyExample.setPageSize(page.getRows());
+		
+		return companyExample;
+	}
+	
+	/**
+	 * 获取企业列表
+	 */
+	@Override
+	public List<Company> companyList(Page page,Company company) {
+		CompanyExample companyExample = queryCompanyExample(page, company);
+		return companyMapper.selectByExample(companyExample);
+	}
+
+	/**
+	 * 获取总记录数
+	 * @param queryMap
+	 * @return
+	 */
+	@Override
+	public int getTotal(Page page,Company company) {
+		CompanyExample companyExample = queryCompanyExample(page, company);
+		return companyMapper.countByExample(companyExample);
+	}
+
+	/**
+	 * 添加企业信息
+	 */
+	@Override
+	public int add(Company company) {
+		// TODO Auto-generated method stub
+		return companyMapper.insert(company);
+	}
+
+	/**
+	 * 修改企业信息
+	 * @param company
+	 * @return
+	 */
+	@Override
+	public int edit(Company company) {
+		// TODO Auto-generated method stub
+		return companyMapper.updateByPrimaryKey(company);
+	}
+	/**
+	 * 删除企业信息
+	 */
+	@Override
+	public int delete(String ids) {
+		return companyMapper.delete(ids);
+	}
+
+	/**
+	 * 获取指定列的集合(companyId,companyName)两列
+	 */
+	@Override
+	public List<Company> getCompanyNameList() {
+		try {
+			//获取所有段的数据集合
+			List<Company> listAll = companyMapper.selectByExample(null);
+			//获取指定字段的数据集合
+			return (List<Company>)PojoUtils.convertToPojoByAddAttr(listAll,"companyId,companyName");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

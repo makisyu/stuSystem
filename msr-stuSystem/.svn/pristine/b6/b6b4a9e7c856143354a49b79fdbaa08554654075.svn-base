@@ -1,0 +1,22 @@
+package com.msr.service;
+
+import java.util.List;
+
+import com.msr.entity.Attendance;
+import com.msr.page.Page;
+
+public interface AttendanceService {
+	//获取考勤列表
+	public List<Attendance> attendanceList(Page page, Attendance attendance);
+
+	//获得总页数
+	public int getTotal(Page page, Attendance attendance);
+	
+	/**
+	 * 批量删除
+	 * @param ids
+	 * @return
+	 */
+	public int delete(String ids);
+	
+}

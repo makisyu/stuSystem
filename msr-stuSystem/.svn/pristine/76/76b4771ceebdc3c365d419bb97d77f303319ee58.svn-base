@@ -1,0 +1,52 @@
+package com.msr.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.msr.entity.Attendance;
+import com.msr.entity.Clazz;
+import com.msr.page.Page;
+import com.msr.service.AttendanceService;
+@RequestMapping("/admin/attendance")
+@Controller
+public class AttendanceController {
+	@Autowired
+	private AttendanceService attendanceService;
+	/**
+	 * 考勤列表页面
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping(value="/list",method=RequestMethod.GET)
+	public ModelAndView list(ModelAndView model){
+		model.setViewName("attendance/list");
+		return model;
+	}
+	
+	/**
+	 * 获取考勤列表
+	 * @return
+	 */
+	@RequestMapping(value="/list",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> getList(Page page,Attendance attendance){
+		//定义map集合，封装数据，传递给前端页面
+		Map<String, Object> ret = new HashMap<String, Object>();
+		
+		//查询班级信息
+		List<Attendance> attendanceList = attendanceService.attendanceList(page, attendance);
+		
+		//往map中添加元素
+		ret.put("rows", attendanceList);
+		ret.put("total", attendanceService.getTotal(page,attendance));
+		return ret;
+	}
+}

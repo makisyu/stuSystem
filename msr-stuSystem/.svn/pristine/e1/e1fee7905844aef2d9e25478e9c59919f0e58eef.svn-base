@@ -1,0 +1,18 @@
+package util;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
+ 
+/**
+ * java获取mac和机器码，注册码的实现
+ * 
+ */
+public class AuthorizationUtils {
+	public static void main(String[] args) {
+		/*Calendar calendarTime = Calendar.getInstance(); 
+		Date d =  calendarTime.getTime();*/
+		Date date = new Date();
+		System.out.println(date.getHours());
+	}
+}

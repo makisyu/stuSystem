@@ -1,0 +1,99 @@
+package com.msr.util;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+ 
+//注意：使用cmd命令的方式根据ip获取mac地址，限制：只能获取局域网内的mac地址
+
+/**
+ * 获取mact地址
+ */
+public class ClientIpUtil {
+    public static void main(String[] args) throws IOException {
+        //System.out.println(getLocalIpAddress());
+    	//System.out.println(getLocalMacAddress());
+    	System.out.println(getMacAddrByIp("192.168.11.111"));
+    }
+ 
+    /**
+     * 获取本机对应的ip地址
+     * 
+     * @return ip
+     */
+    public static String getLocalIpAddress() {
+        InetAddress ia = null;
+        String localIp = "";
+        try {
+            ia = InetAddress.getLocalHost();
+            localIp = ia.getHostAddress();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return localIp;
+    }
+ 
+    /**
+     * 获取本机对应的mac地址
+     * 
+     * @return mac
+     */
+    public static String getLocalMacAddress() {
+        String macAddress = "";
+        InetAddress inetAddress = null;
+        try {
+            inetAddress = InetAddress.getLocalHost();
+            byte[] mac = NetworkInterface.getByInetAddress(inetAddress).getHardwareAddress();
+            // 把mac地址拼装成String
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < mac.length; i++) {
+                if (i != 0) {
+                    sb.append("-");
+                }
+                // mac[i] & 0xFF 是为了把byte转化为正整数
+                String s = Integer.toHexString(mac[i] & 0xFF);
+                sb.append(s.length() == 1 ? 0 + s : s);
+            }
+            // 把字符串所有小写字母改为大写成为正规的mac地址并返回
+            macAddress = sb.toString().trim().toUpperCase();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        } catch (SocketException e) {
+            e.printStackTrace();
+        }
+        return macAddress;
+    }
+    
+	public static String getMacAddrByIp(String ip) {
+	    String macAddr = null;
+	    if(ip.equals(getLocalIpAddress())) {
+	    	macAddr = getLocalMacAddress();
+	    }else {
+	    	try {
+		        Process process = Runtime.getRuntime().exec("nbtstat -a " + ip);
+		        BufferedReader br = new BufferedReader(
+		                new InputStreamReader(process.getInputStream()));
+		        Pattern pattern = Pattern.compile("([A-F0-9]{2}-){5}[A-F0-9]{2}");
+		        Matcher matcher;
+		        for (String strLine = br.readLine(); strLine != null;
+		             strLine = br.readLine()) {
+		            matcher = pattern.matcher(strLine);
+		            if (matcher.find()) {
+		                macAddr = matcher.group();
+		                break;
+		            }
+		        }
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+	    }
+	    return macAddr;
+	}
+}

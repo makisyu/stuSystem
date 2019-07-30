@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.msr.mapper.AttendanceMapper" >
+  <resultMap id="BaseResultMap" type="com.msr.entity.Attendance" >
+    <id column="a_id" property="aId" jdbcType="INTEGER" />
+    <result column="a_date" property="aDate" jdbcType="DATE" />
+    <result column="a_1" property="a1" jdbcType="VARCHAR" />
+    <result column="a_2" property="a2" jdbcType="VARCHAR" />
+    <result column="a_3" property="a3" jdbcType="VARCHAR" />
+    <result column="a_4" property="a4" jdbcType="VARCHAR" />
+    <result column="a_5" property="a5" jdbcType="VARCHAR" />
+    <result column="a_6" property="a6" jdbcType="VARCHAR" />
+    <result column="a_7" property="a7" jdbcType="VARCHAR" />
+    <result column="a_8" property="a8" jdbcType="VARCHAR" />
+    <result column="a_type" property="aType" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="stu_id" property="stuId" jdbcType="INTEGER" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+    <result column="company_id" property="companyId" jdbcType="INTEGER" />
+    <result column="clazz_id" property="clazzId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    a_id, a_date, a_1, a_2, a_3, a_4, a_5, a_6, a_7, a_8, a_type, signature, stu_id, 
+    teacher_id, company_id, clazz_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.msr.entity.AttendanceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from attendance
+    where a_id = #{aId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from attendance
+    where a_id = #{aId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.msr.entity.AttendanceExample" >
+    delete from attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.msr.entity.Attendance" >
+    insert into attendance (a_id, a_date, a_1, 
+      a_2, a_3, a_4, a_5, 
+      a_6, a_7, a_8, a_type, 
+      signature, stu_id, teacher_id, 
+      company_id, clazz_id)
+    values (#{aId,jdbcType=INTEGER}, #{aDate,jdbcType=DATE}, #{a1,jdbcType=VARCHAR}, 
+      #{a2,jdbcType=VARCHAR}, #{a3,jdbcType=VARCHAR}, #{a4,jdbcType=VARCHAR}, #{a5,jdbcType=VARCHAR}, 
+      #{a6,jdbcType=VARCHAR}, #{a7,jdbcType=VARCHAR}, #{a8,jdbcType=VARCHAR}, #{aType,jdbcType=VARCHAR}, 
+      #{signature,jdbcType=VARCHAR}, #{stuId,jdbcType=INTEGER}, #{teacherId,jdbcType=INTEGER}, 
+      #{companyId,jdbcType=INTEGER}, #{clazzId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.msr.entity.Attendance" >
+    insert into attendance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        a_id,
+      </if>
+      <if test="aDate != null" >
+        a_date,
+      </if>
+      <if test="a1 != null" >
+        a_1,
+      </if>
+      <if test="a2 != null" >
+        a_2,
+      </if>
+      <if test="a3 != null" >
+        a_3,
+      </if>
+      <if test="a4 != null" >
+        a_4,
+      </if>
+      <if test="a5 != null" >
+        a_5,
+      </if>
+      <if test="a6 != null" >
+        a_6,
+      </if>
+      <if test="a7 != null" >
+        a_7,
+      </if>
+      <if test="a8 != null" >
+        a_8,
+      </if>
+      <if test="aType != null" >
+        a_type,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="stuId != null" >
+        stu_id,
+      </if>
+      <if test="teacherId != null" >
+        teacher_id,
+      </if>
+      <if test="companyId != null" >
+        company_id,
+      </if>
+      <if test="clazzId != null" >
+        clazz_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aId != null" >
+        #{aId,jdbcType=INTEGER},
+      </if>
+      <if test="aDate != null" >
+        #{aDate,jdbcType=DATE},
+      </if>
+      <if test="a1 != null" >
+        #{a1,jdbcType=VARCHAR},
+      </if>
+      <if test="a2 != null" >
+        #{a2,jdbcType=VARCHAR},
+      </if>
+      <if test="a3 != null" >
+        #{a3,jdbcType=VARCHAR},
+      </if>
+      <if test="a4 != null" >
+        #{a4,jdbcType=VARCHAR},
+      </if>
+      <if test="a5 != null" >
+        #{a5,jdbcType=VARCHAR},
+      </if>
+      <if test="a6 != null" >
+        #{a6,jdbcType=VARCHAR},
+      </if>
+      <if test="a7 != null" >
+        #{a7,jdbcType=VARCHAR},
+      </if>
+      <if test="a8 != null" >
+        #{a8,jdbcType=VARCHAR},
+      </if>
+      <if test="aType != null" >
+        #{aType,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="stuId != null" >
+        #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null" >
+        #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="clazzId != null" >
+        #{clazzId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.msr.entity.AttendanceExample" resultType="java.lang.Integer" >
+    select count(*) from attendance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update attendance
+    <set >
+      <if test="record.aId != null" >
+        a_id = #{record.aId,jdbcType=INTEGER},
+      </if>
+      <if test="record.aDate != null" >
+        a_date = #{record.aDate,jdbcType=DATE},
+      </if>
+      <if test="record.a1 != null" >
+        a_1 = #{record.a1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a2 != null" >
+        a_2 = #{record.a2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a3 != null" >
+        a_3 = #{record.a3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a4 != null" >
+        a_4 = #{record.a4,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a5 != null" >
+        a_5 = #{record.a5,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a6 != null" >
+        a_6 = #{record.a6,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a7 != null" >
+        a_7 = #{record.a7,jdbcType=VARCHAR},
+      </if>
+      <if test="record.a8 != null" >
+        a_8 = #{record.a8,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aType != null" >
+        a_type = #{record.aType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signature != null" >
+        signature = #{record.signature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuId != null" >
+        stu_id = #{record.stuId,jdbcType=INTEGER},
+      </if>
+      <if test="record.teacherId != null" >
+        teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.companyId != null" >
+        company_id = #{record.companyId,jdbcType=INTEGER},
+      </if>
+      <if test="record.clazzId != null" >
+        clazz_id = #{record.clazzId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update attendance
+    set a_id = #{record.aId,jdbcType=INTEGER},
+      a_date = #{record.aDate,jdbcType=DATE},
+      a_1 = #{record.a1,jdbcType=VARCHAR},
+      a_2 = #{record.a2,jdbcType=VARCHAR},
+      a_3 = #{record.a3,jdbcType=VARCHAR},
+      a_4 = #{record.a4,jdbcType=VARCHAR},
+      a_5 = #{record.a5,jdbcType=VARCHAR},
+      a_6 = #{record.a6,jdbcType=VARCHAR},
+      a_7 = #{record.a7,jdbcType=VARCHAR},
+      a_8 = #{record.a8,jdbcType=VARCHAR},
+      a_type = #{record.aType,jdbcType=VARCHAR},
+      signature = #{record.signature,jdbcType=VARCHAR},
+      stu_id = #{record.stuId,jdbcType=INTEGER},
+      teacher_id = #{record.teacherId,jdbcType=INTEGER},
+      company_id = #{record.companyId,jdbcType=INTEGER},
+      clazz_id = #{record.clazzId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.msr.entity.Attendance" >
+    update attendance
+    <set >
+      <if test="aDate != null" >
+        a_date = #{aDate,jdbcType=DATE},
+      </if>
+      <if test="a1 != null" >
+        a_1 = #{a1,jdbcType=VARCHAR},
+      </if>
+      <if test="a2 != null" >
+        a_2 = #{a2,jdbcType=VARCHAR},
+      </if>
+      <if test="a3 != null" >
+        a_3 = #{a3,jdbcType=VARCHAR},
+      </if>
+      <if test="a4 != null" >
+        a_4 = #{a4,jdbcType=VARCHAR},
+      </if>
+      <if test="a5 != null" >
+        a_5 = #{a5,jdbcType=VARCHAR},
+      </if>
+      <if test="a6 != null" >
+        a_6 = #{a6,jdbcType=VARCHAR},
+      </if>
+      <if test="a7 != null" >
+        a_7 = #{a7,jdbcType=VARCHAR},
+      </if>
+      <if test="a8 != null" >
+        a_8 = #{a8,jdbcType=VARCHAR},
+      </if>
+      <if test="aType != null" >
+        a_type = #{aType,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="stuId != null" >
+        stu_id = #{stuId,jdbcType=INTEGER},
+      </if>
+      <if test="teacherId != null" >
+        teacher_id = #{teacherId,jdbcType=INTEGER},
+      </if>
+      <if test="companyId != null" >
+        company_id = #{companyId,jdbcType=INTEGER},
+      </if>
+      <if test="clazzId != null" >
+        clazz_id = #{clazzId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.msr.entity.Attendance" >
+    update attendance
+    set a_date = #{aDate,jdbcType=DATE},
+      a_1 = #{a1,jdbcType=VARCHAR},
+      a_2 = #{a2,jdbcType=VARCHAR},
+      a_3 = #{a3,jdbcType=VARCHAR},
+      a_4 = #{a4,jdbcType=VARCHAR},
+      a_5 = #{a5,jdbcType=VARCHAR},
+      a_6 = #{a6,jdbcType=VARCHAR},
+      a_7 = #{a7,jdbcType=VARCHAR},
+      a_8 = #{a8,jdbcType=VARCHAR},
+      a_type = #{aType,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      stu_id = #{stuId,jdbcType=INTEGER},
+      teacher_id = #{teacherId,jdbcType=INTEGER},
+      company_id = #{companyId,jdbcType=INTEGER},
+      clazz_id = #{clazzId,jdbcType=INTEGER}
+    where a_id = #{aId,jdbcType=INTEGER}
+  </update>
+</mapper>

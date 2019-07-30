@@ -1,0 +1,171 @@
+package com.msr.entity;
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class Attendance {
+    private Integer aId;
+
+    @DateTimeFormat(pattern ="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+9")
+    private Date aDate;
+
+    private String a1;
+
+    private String a2;
+
+    private String a3;
+
+    private String a4;
+
+    private String a5;
+
+    private String a6;
+
+    private String a7;
+
+    private String a8;
+
+    private String aType;
+
+    private String signature;
+
+    private Integer stuId;
+
+    private Integer teacherId;
+
+    private Integer companyId;
+
+    private Integer clazzId;
+
+    public Integer getaId() {
+        return aId;
+    }
+
+    public void setaId(Integer aId) {
+        this.aId = aId;
+    }
+
+    public Date getaDate() {
+        return aDate;
+    }
+
+    public void setaDate(Date aDate) {
+        this.aDate = aDate;
+    }
+
+    public String getA1() {
+        return a1;
+    }
+
+    public void setA1(String a1) {
+        this.a1 = a1 == null ? null : a1.trim();
+    }
+
+    public String getA2() {
+        return a2;
+    }
+
+    public void setA2(String a2) {
+        this.a2 = a2 == null ? null : a2.trim();
+    }
+
+    public String getA3() {
+        return a3;
+    }
+
+    public void setA3(String a3) {
+        this.a3 = a3 == null ? null : a3.trim();
+    }
+
+    public String getA4() {
+        return a4;
+    }
+
+    public void setA4(String a4) {
+        this.a4 = a4 == null ? null : a4.trim();
+    }
+
+    public String getA5() {
+        return a5;
+    }
+
+    public void setA5(String a5) {
+        this.a5 = a5 == null ? null : a5.trim();
+    }
+
+    public String getA6() {
+        return a6;
+    }
+
+    public void setA6(String a6) {
+        this.a6 = a6 == null ? null : a6.trim();
+    }
+
+    public String getA7() {
+        return a7;
+    }
+
+    public void setA7(String a7) {
+        this.a7 = a7 == null ? null : a7.trim();
+    }
+
+    public String getA8() {
+        return a8;
+    }
+
+    public void setA8(String a8) {
+        this.a8 = a8 == null ? null : a8.trim();
+    }
+
+    public String getaType() {
+        return aType;
+    }
+
+    public void setaType(String aType) {
+        this.aType = aType == null ? null : aType.trim();
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature == null ? null : signature.trim();
+    }
+
+    public Integer getStuId() {
+        return stuId;
+    }
+
+    public void setStuId(Integer stuId) {
+        this.stuId = stuId;
+    }
+
+    public Integer getTeacherId() {
+        return teacherId;
+    }
+
+    public void setTeacherId(Integer teacherId) {
+        this.teacherId = teacherId;
+    }
+
+    public Integer getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Integer companyId) {
+        this.companyId = companyId;
+    }
+
+    public Integer getClazzId() {
+        return clazzId;
+    }
+
+    public void setClazzId(Integer clazzId) {
+        this.clazzId = clazzId;
+    }
+}

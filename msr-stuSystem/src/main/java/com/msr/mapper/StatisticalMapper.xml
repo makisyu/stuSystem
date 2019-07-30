@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.msr.mapper.StatisticalMapper" >
+
+	<!-- 
+		统计班级人数
+		public List<Student> clazzCounts();
+	 -->
+	 
+	 <select id="clazzCounts" resultMap="clazzCountsMap">
+	 	select 	
+			c.clazz_name AS clazzName,
+			SUM(CASE WHEN s.stu_sex =1 THEN 1  ELSE 0 END) AS  maleCount,
+			SUM(CASE WHEN s.stu_sex = 2 THEN 1  ELSE 0 END) AS femaleCount,
+			COUNT(1) AS counts
+		from student s,clazz c
+		where s.clazz_id = c.clazz_id 
+		and s.stu_status = 1
+		group by c.clazz_name
+	 </select>
+	 
+	 <resultMap type="Statistical" id="clazzCountsMap">
+	 	 <result column="clazzName" property="clazzName"/>
+	 	 <result column="maleCount" property="maleCount"/>
+	 	 <result column="femaleCount" property="femaleCount"/>
+	 	 <result column="counts" property="counts"/>
+	 </resultMap>
+	 
+	<!--  
+		按年份统计人数
+		public List<Statistical> yearCounts(); 
+	-->
+	<select id="yearCounts" resultMap="yearCountsMap">
+		select 
+		YEAR(s.stu_begintime) as years,
+		count(*) as yearCounts,
+		SUM(CASE WHEN s.stu_sex =1 THEN 1  ELSE 0 END) AS  maleCount,
+		SUM(CASE WHEN s.stu_sex = 2 THEN 1  ELSE 0 END) AS femaleCount
+		from student s
+		group by  YEAR(s.stu_begintime)
+	</select>
+	
+	<resultMap type="Statistical" id="yearCountsMap">
+		<result column="years" property="years"/>
+		<result column="yearCounts" property="yearCounts"/>
+		
+		<result column="maleCount" property="maleCount"/>
+		<result column="femaleCount" property="femaleCount"/>
+	</resultMap>
+	
+	<!-- 
+	按年份和企业统计人数
+	public List<Statistical> CompanyCounts(); 
+	-->
+	<select id="CompanyCounts" resultMap="CompanyCountsMap">
+		select 
+		c.company_name as companyName,
+		count(*) as counts
+		from student s,company c
+		where s.company_id = c.company_id
+		group by  c.company_name
+	</select>
+	
+	<resultMap type="Statistical" id="CompanyCountsMap">
+		<result column="companyName" property="companyName"/>
+		<result column="years" property="years"/>
+		<result column="counts" property="counts"/>
+	</resultMap>
+	
+	
+	
+</mapper>
