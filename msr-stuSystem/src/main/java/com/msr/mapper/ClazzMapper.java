@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.msr.entity.Clazz;
 import com.msr.entity.ClazzExample;
+import com.msr.entity.Teacher;
 
 public interface ClazzMapper {
     /**
@@ -104,5 +105,13 @@ public interface ClazzMapper {
      *
      * @mbggenerated Mon Jul 08 10:48:09 JST 2019
      */
+    
+
     int updateByPrimaryKey(Clazz record);
+
+    /**
+	 * 根据班级ID查找老师
+	 * @return
+	 */
+	Teacher getTeacher(int clazzId);
 }

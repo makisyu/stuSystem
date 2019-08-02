@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.msr.entity.Clazz;
 import com.msr.entity.ClazzExample;
 import com.msr.entity.ClazzExample.Criteria;
+import com.msr.entity.Teacher;
 import com.msr.mapper.ClazzMapper;
 import com.msr.page.Page;
 import com.msr.service.ClazzService;
@@ -132,6 +133,16 @@ public class ClazzServiceImpl implements ClazzService{
 	public Clazz findClazzById(Integer cid) {
 		// TODO Auto-generated method stub
 		return clazzMapper.selectByPrimaryKey(cid);
+	}
+
+	/**
+	 * 根据班级ID查找老师
+	 * @return
+	 */
+	@Override
+	public Teacher getTeacher(int clazzId) {
+		// TODO Auto-generated method stub
+		return clazzMapper.getTeacher(clazzId);
 	}
 
 }

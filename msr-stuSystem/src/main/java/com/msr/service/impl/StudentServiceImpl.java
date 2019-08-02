@@ -176,4 +176,20 @@ public class StudentServiceImpl implements StudentService {
 		// TODO Auto-generated method stub
 		return studentMapper.selectByPrimaryKey(stuId);
 	}
+
+    //stuId 和stuName两列
+	@Override
+	public List<Student> getStudentNameList() {
+		try {
+			//获取所有段的数据集合
+			List<Student> listAll = studentMapper.selectByExample(null);
+			//获取指定字段的数据集合
+			return (List<Student>)PojoUtils.convertToPojoByAddAttr(listAll,"stuId,stuName");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 }

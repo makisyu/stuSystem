@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.msr.entity.Clazz;
+import com.msr.entity.Teacher;
 import com.msr.page.Page;
 import com.msr.service.ClazzService;
 @RequestMapping("/admin/clazz")
@@ -49,7 +50,7 @@ public class ClazzController {
 		return ret;
 	}
 	/**
-	 * 添加用户
+	 * 添加班级
 	 * @param user
 	 * @return
 	 */
@@ -129,5 +130,15 @@ public class ClazzController {
 	@ResponseBody
 	public List<Clazz> summaryClazz(){
 		return clazzService.getClazzNameList();
+	}
+	
+	/**
+	 * 根据班级ID查找老师
+	 * @return
+	 */
+	@RequestMapping(value="/getTeacher",method=RequestMethod.POST)
+	@ResponseBody
+	public  Teacher getTeacher(int clazzId){
+		return clazzService.getTeacher(clazzId);
 	}
 }

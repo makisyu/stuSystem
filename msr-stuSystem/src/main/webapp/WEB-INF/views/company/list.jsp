@@ -20,8 +20,6 @@
 	             &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
 	            <a href="#" id="search-btn" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
 		</div>
-        
-        
     </div>
     <!-- End of toolbar -->
     <table id="data-datagrid" class="easyui-datagrid" toolbar="#wu-toolbar"></table>

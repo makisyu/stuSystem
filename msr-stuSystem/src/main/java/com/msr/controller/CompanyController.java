@@ -135,5 +135,6 @@ public class CompanyController {
 	@ResponseBody
 	public List<Company> getCompanyNameList(){
 		return companyService.getCompanyNameList();
+		
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.msr.entity.Clazz;
 import com.msr.entity.Company;
+import com.msr.entity.Teacher;
 import com.msr.entity.Clazz;
 import com.msr.page.Page;
 
@@ -52,5 +53,11 @@ public interface ClazzService {
 	 * @return
 	 */
 	public int delete(String ids);
+
+	/**
+	 * 根据班级ID查找老师
+	 * @return
+	 */
+	public Teacher getTeacher(int clazzId);
 
 }

@@ -45,7 +45,7 @@ public class StudentController {
 		//定义map集合，封装数据，传递给前端页面
 		Map<String, Object> ret = new HashMap<String, Object>();
 		
-		//查询企业信息
+		//查询学生信息
 		List<Student> studentList = studentService.studentList(page,student);
 		
 		//往map中添加元素
@@ -133,21 +133,9 @@ public class StudentController {
 	 */
 	@RequestMapping(value="/getStudentNameList",method=RequestMethod.POST)
 	@ResponseBody
-	public List<Student> getStudentNameList(String type,HttpServletRequest request){
-		User user = (User)request.getSession().getAttribute("admin");
-		List<Teacher> teacherList = teacherService.getTeacherNameList();
-		
-		int teacherId = -1;
-		for (Teacher teacher : teacherList) {
-			if(teacher.getTeacherName().equals(user.getUsername())) {
-				teacherId = teacher.getTeacherId();
-				break;
-			}
-		}
-		
-		System.out.println("teacherId:"+teacherId);
-		
-		return studentService.getStudentNameList(type,teacherId);
+	public List<Student> getStudentNameList(){
+		return studentService.getStudentNameList();
 	}
+	
 
 }

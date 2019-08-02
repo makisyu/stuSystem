@@ -50,5 +50,12 @@ public interface StudentService {
 	 */
 	public int delete(String ids);
 	
+	/**
+	 * 学生姓名表
+	 * @param ids
+	 * @return
+	 */
+	public List<Student> getStudentNameList();
+	
 
 }
